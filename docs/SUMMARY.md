@@ -3,7 +3,6 @@
 ## Introduction
 - [About the Language](../README.md)
 - [Quick Start](getting-started.md)
-- [Syntax Overview](syntax-overview.md)
 - [Examples](examples.md)
 
 ## Syntax
@@ -34,6 +33,4 @@
 - [Examples](creating_libraries/examples.md)
 
 ## Additional
-- [FAQ](faq.md)
-- [Changelog](changelog.md)
 - [Contributing](contributing.md)
