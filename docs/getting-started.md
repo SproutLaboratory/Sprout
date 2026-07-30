@@ -92,6 +92,21 @@ Sprout.exe
 8
 >> exit
 ```
+Так же при запуске можно задать параметр -log 
+где будет вестись подробное логирование
+```bash
+Sprout.exe -log
+```
+И параметр -code "исполняемый код до запуска скрипта"
+
+```bash
+Sprout.exe -code "a = 1;b = 2;" test.sprout
+```
+### test.sprout
+```sprout
+out (a + b);
+```
+выведет 3
 
 ---
 
