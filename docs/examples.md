@@ -1,4 +1,4 @@
-[< back](README.md)
+[< back](SUMMARY.md)
 # 📝 Examples
 
 Here you will find ready-to-use Sprout scripts for various tasks.
