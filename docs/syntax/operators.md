@@ -1,4 +1,4 @@
-[< back](variables.md) | [next >](if%20elif%20and%20else.md)
+[< back](variables.md) | [next >](output%20and%20input.md)
 
 ---
 
@@ -158,4 +158,4 @@ out "Sum: " + str 5 + 3     # ❌ "Sum: 5" + 3 → error
 
 ---
 
-[next >](if%20elif%20and%20else.md)
+[next >](output%20and%20input.md)
