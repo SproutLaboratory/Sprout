@@ -132,9 +132,6 @@ Check:
 - Is `Sprout.exe` in the folder?
 - Are you in the same folder in the command line?
 - Does your script file have the `.sprout` extension?
-
-If nothing helps — create an [Issue](https://github.com/SproutLaboratory/Sprout/issues).
-
 ---
 
 **Happy coding with Sprout!** 🌱
