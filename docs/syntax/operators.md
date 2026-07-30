@@ -1,4 +1,4 @@
-[< back](operators.md) | [next >](if%20elif%20and%20else.md)
+[< back](сomments.md) | [next >](if%20elif%20and%20else.md)
 
 ---
 
