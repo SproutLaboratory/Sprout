@@ -1,0 +1,70 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+*.lock.json
+*.deps.json
+*.pdb
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio
+*.vs/
+*.vssscc
+*.vspscc
+*.vsp
+*.vspx
+*.sln.docstates
+*.psess
+*.dbmdl
+*.vxidx
+*.bak
+*.cache
+*.tmp
+*.log
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+
+# Build output
+publish/
+Release/
+Debug/
+build/
+[Bb]in/
+[Oo]bj/
+
+# Test results
+TestResults/
+*.trx
+
+# OS junk
+Thumbs.db
+*.DS_Store
+*.tmp
+*.bak
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Backup files
+*.~*
+*~
+
+# Logs
+*.log
+logs/
