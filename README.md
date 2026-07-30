@@ -70,4 +70,4 @@ dotnet publish -c Release -r linux-arm64 --self-contained true /p:PublishSingleF
 ```
 
 ## документация
-- [Документация](docs.SUMMARY.md)
+- [Документация](docs\SUMMARY.md)
