@@ -36,3 +36,25 @@
   - И многое другое
 
 ---
+
+## 🛠️ Сборка из исходников
+
+### Требования
+- [.NET SDK 10.0](https://dotnet.microsoft.com/download) или выше
+
+### Команды для сборки
+
+# Windows x64
+dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+
+# Windows x86
+dotnet publish -c Release -r win-x86 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+
+# Windows ARM64
+dotnet publish -c Release -r win-arm64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+
+# Linux x64
+dotnet publish -c Release -r linux-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+
+# Linux ARM64
+dotnet publish -c Release -r linux-arm64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
