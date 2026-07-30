@@ -45,16 +45,29 @@
 ### Команды для сборки
 
 # Windows x64
+```bash
 dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+```
 
 # Windows x86
+```bash
 dotnet publish -c Release -r win-x86 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+```
 
 # Windows ARM64
+```bash
 dotnet publish -c Release -r win-arm64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+```
 
 # Linux x64
+```bash
 dotnet publish -c Release -r linux-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+```
 
 # Linux ARM64
+```bash
 dotnet publish -c Release -r linux-arm64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+```
+
+## документация
+- [Документация](docs)
