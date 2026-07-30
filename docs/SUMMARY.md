@@ -1,39 +1,39 @@
-# 📖 Документация Sprout
+# 📖 Sprout Documentation
 
-## Введение
-- [О языке](../README.md)
-- [Быстрый старт](getting-started.md)
-- [Синтаксис](syntax-overview.md)
-- [Примеры](examples.md)
+## Introduction
+- [About the Language](../README.md)
+- [Quick Start](getting-started.md)
+- [Syntax Overview](syntax-overview.md)
+- [Examples](examples.md)
 
-## Синтаксис
-- [Введение](syntax/index.md)
-- [Комментарии](syntax/comments.md)
-- [Переменные](syntax/variables.md)
-- [Операторы](syntax/operators.md)
-- [Массивы и словари](syntax/arrays-and-dicts.md)
-- [Условные операторы](syntax/if%20elif%20and%20else.md)
-- [Циклы](syntax/loops.md)
-- [Функции](syntax/functions.md)
-- [Вывод и ввод](syntax/output%20and%20input.md)
-- [Обработка ошибок](syntax/try.md)
-- [Импорт библиотек](syntax/import.md)
-- [Глобальные переменные](syntax/global-local.md)
-- [Стандартная библиотека](syntax/stdlib.md)
+## Syntax
+- [Introduction](syntax/index.md)
+- [Comments](syntax/comments.md)
+- [Variables](syntax/variables.md)
+- [Operators](syntax/operators.md)
+- [Arrays and Dictionaries](syntax/arrays-and-dicts.md)
+- [Conditional Statements](syntax/if%20elif%20and%20else.md)
+- [Loops](syntax/loops.md)
+- [Functions](syntax/functions.md)
+- [Output and Input](syntax/output%20and%20input.md)
+- [Error Handling](syntax/try.md)
+- [Importing Libraries](syntax/import.md)
+- [Global Variables](syntax/global-local.md)
+- [Standard Library](syntax/stdlib.md)
 
-## Создание библиотек
-- [Введение](creating_libraries/index.md)
-- [Быстрый старт](creating_libraries/getting-started.md)
-- [Основы C#](creating_libraries/csharp-basics.md)
-- [Создание методов](creating_libraries/creating-methods.md)
+## Creating Libraries
+- [Introduction](creating_libraries/index.md)
+- [Quick Start](creating_libraries/getting-started.md)
+- [C# Basics](creating_libraries/csharp-basics.md)
+- [Creating Methods](creating_libraries/creating-methods.md)
 - [SproutValue](creating_libraries/working-with-sproutvalue.md)
-- [Внешние библиотеки](creating_libraries/using-external-libs.md)
-- [Отладка](creating_libraries/debugging.md)
-- [Рекомендации](creating_libraries/best-practices.md)
-- [Публикация](creating_libraries/publishing.md)
-- [Примеры](creating_libraries/examples.md)
+- [External Libraries](creating_libraries/using-external-libs.md)
+- [Debugging](creating_libraries/debugging.md)
+- [Best Practices](creating_libraries/best-practices.md)
+- [Publishing](creating_libraries/publishing.md)
+- [Examples](creating_libraries/examples.md)
 
-## Дополнительно
-- [Часто задаваемые вопросы](faq.md)
-- [История изменений](changelog.md)
-- [Как внести вклад](contributing.md)
+## Additional
+- [FAQ](faq.md)
+- [Changelog](changelog.md)
+- [Contributing](contributing.md)
