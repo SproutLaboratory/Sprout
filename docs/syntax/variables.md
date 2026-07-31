@@ -123,8 +123,8 @@ out str arr[0]  # 100
 ### Working with Dictionaries
 ```sprout
 person = {name = "Alex", age = 25}
-person[age] = 26
-out str person[age]  # 26
+person["age"] = 26
+out str person["age"]  # 26
 ```
 
 ---
