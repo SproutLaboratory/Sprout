@@ -149,7 +149,7 @@ len_arr = len(arr)
 
 if len_arr > 0 {
     out "Array has " + str len_arr + " elements"
-    out "First element: " + str arr`0`
+    out "First element: " + str arr[0]
 } else {
     out "Array is empty"
 }
