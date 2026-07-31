@@ -1,4 +1,5 @@
 using System;
+
 namespace SproutInterpreter
 {
     public partial class Parser
@@ -18,6 +19,20 @@ namespace SproutInterpreter
                     Log($"  Variable: {varNode.Name}");
                 if (node is SetIndexNode setNode)
                     Log($"  SetIndexNode: {setNode.Collection} [{setNode.Index}]");
+            }
+            
+            // ===== ЕСЛИ ЭТО ИНДЕКСАЦИЯ И ИДЁТ `=`, ПРЕВРАЩАЕМ В SetIndexNode =====
+            if (node is BinaryOpNode binOpNode && binOpNode.Operator == "index")
+            {
+                if (IsOperator("="))
+                {
+                    Advance();
+                    var value = ParseExpression();
+                    var setNode = new SetIndexNode(binOpNode.Left, binOpNode.Right);
+                    setNode.Value = value;
+                    return setNode;
+                }
+                return node;
             }
             
             if (IsOperator("="))

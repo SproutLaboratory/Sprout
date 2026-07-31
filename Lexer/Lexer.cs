@@ -94,7 +94,6 @@ namespace SproutInterpreter
                         '\\' => '\\', 
                         '"' => '"', 
                         '\'' => '\'', 
-                        '`' => '`',
                         _ => currentChar 
                     };
                 }
@@ -225,13 +224,6 @@ namespace SproutInterpreter
                     }
                     
                     tokens.Add(new Token(Token.TokenType.Operator, op, line));
-                    continue;
-                }
-
-                if (currentChar == '`')
-                {
-                    Advance();
-                    tokens.Add(new Token(Token.TokenType.Backtick, "`", line));
                     continue;
                 }
 

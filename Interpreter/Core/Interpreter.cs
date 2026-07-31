@@ -233,6 +233,11 @@ namespace SproutInterpreter
                 var localEnv = env.CreateChild();
                 return ExecuteNode(node.TryBody, localEnv);
             }
+            catch (ReturnException)
+            {
+                // ReturnException НЕ перехватываем catch-блоком — пробрасываем дальше
+                throw;
+            }
             catch (Exception ex)
             {
                 Log($"Перехвачена ошибка: {ex.Message}");
@@ -803,7 +808,9 @@ namespace SproutInterpreter
 
         private SproutValue ExecuteUserFunction(Function func, List<ASTNode> args, ScopedEnvironment env)
         {
-            ScopedEnvironment localEnv = func.Scope == "global" ? new ScopedEnvironment(GetRootEnvironment(env)) : new ScopedEnvironment();
+            ScopedEnvironment localEnv = func.Scope == "global" 
+                ? new ScopedEnvironment(GetRootEnvironment(env)) 
+                : new ScopedEnvironment();
 
             if (args.Count != func.Parameters.Count)
                 throw new Exception($"Функция {func.Name} ожидает {func.Parameters.Count} аргументов, получено {args.Count}");
@@ -825,7 +832,7 @@ namespace SproutInterpreter
                 catch (ReturnException ex) 
                 { 
                     Log($"Return: {ex.Value}");
-                    return ex.Value; 
+                    return ex.Value; // ReturnException пробрасывается как значение, а не исключение
                 }
             }
             return result;
@@ -914,6 +921,12 @@ namespace SproutInterpreter
             double start = GetNumericValue(startVal);
             double end = GetNumericValue(endVal);
             double step = GetNumericValue(stepVal);
+
+            // Если это вызов len(...), то вычитаем 1
+            if (node.End is CallNode callNode && callNode.Name == "len")
+            {
+                end = end - 1;
+            }
             
             var localEnv = env.CreateChild();
             
@@ -1050,7 +1063,7 @@ namespace SproutInterpreter
 
             if (!File.Exists(dllPath))
             {
-                string exePath = AppContext.BaseDirectory; // ← Добавить эту строку!
+                string exePath = AppContext.BaseDirectory;
                 dllPath = Path.Combine(exePath, libName + ".dll");
                 dllPath = Path.GetFullPath(dllPath);
                 Log($"Поиск в папке EXE: {dllPath}");
@@ -1067,7 +1080,6 @@ namespace SproutInterpreter
             {
                 var assembly = Assembly.LoadFile(dllPath);
                 Log($"✅ DLL загружена");
-                // Дополнительное логирование: имя и версия сборки
                 Log($"   Имя: {assembly.GetName().Name}, версия: {assembly.GetName().Version}");
                 
                 var libObj = new Dictionary<string, SproutValue>();

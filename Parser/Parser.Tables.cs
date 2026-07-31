@@ -86,40 +86,85 @@ namespace SproutInterpreter
             return call;
         }
         
-        // ===== ПАРСИНГ ДОСТУПА К ТАБЛИЦЕ: table[key] или table.key =====
-        private ASTNode ParseTableAccess(string name)
+        // ===== ПАРСИНГ ДОСТУПА К ТАБЛИЦЕ/МАССИВУ: arr[0] или table.key или table[key] =====
+        public ASTNode ParseTableAccess(string name)
         {
-            Log($"Доступ к таблице: {name}");
+            Log($"Доступ к таблице/массиву: {name}");
+            ASTNode node = new VariableNode(name);
             
-            // table.key
-            if (IsPunctuation("."))
+            while (currentToken != null)
             {
-                Advance();
-                if (IsIdentifier())
+                // arr[0] или table["key"]
+                if (IsPunctuation("["))
                 {
-                    string key = currentToken.Value;
-                    Advance();
-                    return new BinaryOpNode("index", new VariableNode(name), new StringNode(key));
+                    Advance(); // пропускаем "["
+                    
+                    ASTNode index;
+                    if (Check(Token.TokenType.Var))
+                    {
+                        Advance();
+                        if (IsIdentifier())
+                        {
+                            string varName = currentToken.Value;
+                            Advance();
+                            index = new VariableNode(varName);
+                        }
+                        else
+                        {
+                            throw new Exception("Ожидалось имя переменной после var");
+                        }
+                    }
+                    else if (IsIdentifier())
+                    {
+                        string varName = currentToken.Value;
+                        Advance();
+                        index = new VariableNode(varName);
+                    }
+                    else if (IsString())
+                    {
+                        string key = currentToken.Value;
+                        Advance();
+                        index = new StringNode(key);
+                    }
+                    else
+                    {
+                        index = ParseExpression();
+                    }
+                    
+                    if (currentToken == null || !IsPunctuation("]"))
+                        throw new Exception($"Ожидался ], получено {currentToken}");
+                    
+                    Advance(); // пропускаем "]"
+                    node = new BinaryOpNode("index", node, index);
                 }
-                throw new Exception("Ожидалось имя поля после .");
+                // table.key
+                else if (IsPunctuation("."))
+                {
+                    Advance();
+                    if (IsIdentifier())
+                    {
+                        string key = currentToken.Value;
+                        Advance();
+                        node = new BinaryOpNode("index", node, new StringNode(key));
+                    }
+                    else
+                    {
+                        throw new Exception("Ожидалось имя поля после .");
+                    }
+                }
+                // table:method()
+                else if (currentToken != null && currentToken.Value == ":")
+                {
+                    // Это вызов метода, обрабатывается отдельно
+                    break;
+                }
+                else
+                {
+                    break;
+                }
             }
             
-            // table[key]
-            if (IsPunctuation("["))
-            {
-                Advance();
-                var index = ParseExpression();
-                Expect(Token.TokenType.Punctuation, "]");
-                return new BinaryOpNode("index", new VariableNode(name), index);
-            }
-            
-            // table:method() - вызов метода
-            if (currentToken != null && currentToken.Value == ":")
-            {
-                return ParseTableMethodCall(name);
-            }
-            
-            return new VariableNode(name);
+            return node;
         }
         
         // ===== ПРОВЕРКА СЛЕДУЮЩЕГО ТОКЕНА =====

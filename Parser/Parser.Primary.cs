@@ -88,7 +88,7 @@ namespace SproutInterpreter
         private ASTNode ParseArray()
         {
             Log("Создание нового массива");
-            Advance();
+            Advance(); // пропускаем "["
             var node = new ArrayNode();
             while (currentToken != null && currentToken.Value != "]")
             {
@@ -112,55 +112,41 @@ namespace SproutInterpreter
             
             Log($"Идентификатор: {name}");
 
-            // ===== ИНДЕКСАЦИЯ: name`index` =====
-            if (currentToken != null && currentToken.Type == Token.TokenType.Backtick)
-            {
-                return ParseIndexChain(name);
-            }
-
             // ===== ВЫЗОВ ФУНКЦИИ: func() =====
             if (currentToken != null && currentToken.Value == "(")
             {
                 Log($"Вызов функции: {name}()");
-                var call = ParseCallNode(name);
+                return ParseCallNode(name);
+            }
+
+            // ===== ИНДЕКСАЦИЯ: name[index] или ДОСТУП К ТАБЛИЦЕ: table.key или table[key] =====
+            if (currentToken != null && (IsPunctuation("[") || IsPunctuation(".") || currentToken.Value == ":"))
+            {
+                // Парсим цепочку доступа
+                var node = ParseTableAccess(name);
                 
-                if (currentToken != null && currentToken.Type == Token.TokenType.Backtick)
+                // Проверяем, не является ли это присваиванием с индексацией
+                if (IsOperator("="))
                 {
-                    var node = call;
-                    while (currentToken != null && currentToken.Type == Token.TokenType.Backtick)
+                    Advance();
+                    var value = ParseExpression();
+                    
+                    if (node is BinaryOpNode binOp && binOp.Operator == "index")
                     {
-                        Advance();
-                        
-                        ASTNode index;
-                        if (Check(Token.TokenType.Var))
-                        {
-                            Advance();
-                            if (IsIdentifier())
-                            {
-                                string varName = currentToken.Value;
-                                Advance();
-                                index = new VariableNode(varName);
-                            }
-                            else
-                            {
-                                throw new Exception("Ожидалось имя переменной после var");
-                            }
-                        }
-                        else
-                        {
-                            index = ParseExpression();
-                        }
-                        
-                        if (currentToken == null || currentToken.Type != Token.TokenType.Backtick)
-                            throw new Exception($"Ожидался `, получено {currentToken}");
-                        
-                        Advance();
-                        node = new BinaryOpNode("index", node, index);
+                        var setNode = new SetIndexNode(binOp.Left, binOp.Right);
+                        setNode.Value = value;
+                        return setNode;
                     }
-                    return node;
+                    if (node is SetIndexNode existingSetNode)
+                    {
+                        existingSetNode.Value = value;
+                        return existingSetNode;
+                    }
+                    
+                    throw new Exception($"Не удалось выполнить присваивание для индексации");
                 }
                 
-                return call;
+                return node;
             }
 
             Log($"Переменная: {name}");
@@ -169,12 +155,12 @@ namespace SproutInterpreter
 
         private ASTNode ParseIndexChain(string name)
         {
-            Log($"Индексация: {name}`...`");
+            Log($"Индексация: {name}[...]");
             ASTNode node = new VariableNode(name);
 
-            while (currentToken != null && currentToken.Type == Token.TokenType.Backtick)
+            while (currentToken != null && IsPunctuation("["))
             {
-                Advance(); // пропускаем первый бэктик
+                Advance(); // пропускаем "["
 
                 ASTNode index;
                 if (Check(Token.TokenType.Var))
@@ -194,11 +180,17 @@ namespace SproutInterpreter
                 }
                 else if (IsIdentifier())
                 {
-                    // Если это идентификатор и следующий токен не бэктик - это ключ словаря
+                    string varName = currentToken.Value;
+                    Advance();
+                    index = new VariableNode(varName);
+                    Log($"  Индекс: {varName} (переменная)");
+                }
+                else if (IsString())
+                {
                     string key = currentToken.Value;
                     Advance();
                     index = new StringNode(key);
-                    Log($"  Индекс: {key} (ключ словаря)");
+                    Log($"  Индекс: \"{key}\" (ключ)");
                 }
                 else
                 {
@@ -206,16 +198,10 @@ namespace SproutInterpreter
                     Log($"  Индекс: выражение");
                 }
 
-                // Проверяем закрывающий бэктик
-                if (currentToken == null || currentToken.Type != Token.TokenType.Backtick)
-                {
-                    // Если нет закрывающего бэктика, возвращаем то, что есть
-                    // (это может быть конец индексации)
-                    node = new BinaryOpNode("index", node, index);
-                    return node;
-                }
-
-                Advance(); // пропускаем закрывающий бэктик
+                if (currentToken == null || !IsPunctuation("]"))
+                    throw new Exception($"Ожидался ], получено {currentToken}");
+                
+                Advance(); // пропускаем "]"
                 node = new BinaryOpNode("index", node, index);
             }
 

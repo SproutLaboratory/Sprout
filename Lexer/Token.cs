@@ -12,8 +12,7 @@ namespace SproutInterpreter
             Global, Local, True, False, Null, 
             And, Or, Not, To, Times, Step,
             Try, Catch,
-            Var,
-            Backtick
+            Var
         }
         
         public TokenType Type { get; set; }

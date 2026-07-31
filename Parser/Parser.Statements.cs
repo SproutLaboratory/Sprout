@@ -28,41 +28,13 @@ namespace SproutInterpreter
             if (Check(Token.TokenType.Local)) return ParseLocal();
             if (Check(Token.TokenType.Try)) return ParseTry();
 
-            // ===== ИДЕНТИФИКАТОР =====
-            if (IsIdentifier())
-            {
-                string name = currentToken.Value;
-                Advance();
-
-                // Присваивание
-                if (IsOperator("="))
-                {
-                    Advance();
-                    var value = ParseExpression();
-                    return new AssignmentNode(name, value);
-                }
-
-                // Доступ к таблице: table.key или table[key] или table:method()
-                if (IsPunctuation(".") || IsPunctuation("[") || (currentToken != null && currentToken.Value == ":"))
-                {
-                    return ParseTableAccess(name);
-                }
-
-                // Вызов функции
-                if (currentToken != null && currentToken.Value == "(")
-                {
-                    return ParseCallNode(name);
-                }
-
-                return new VariableNode(name);
-            }
-
             // ===== БЛОК =====
             if (IsPunctuation("{"))
             {
                 return ParseBlock();
             }
 
+            // ВСЕ выражения (включая присваивания, индексацию, вызовы функций) идут через ParseExpression
             return ParseExpression();
         }
 
@@ -156,13 +128,13 @@ namespace SproutInterpreter
             }
             Expect(Token.TokenType.Punctuation, ")");
 
-            // После вызова функции может быть индексация: func()`index`
-            if (currentToken != null && currentToken.Type == Token.TokenType.Backtick)
+            // После вызова функции может быть индексация: func()[index]
+            if (currentToken != null && IsPunctuation("["))
             {
                 ASTNode node = call;
-                while (currentToken != null && currentToken.Type == Token.TokenType.Backtick)
+                while (currentToken != null && IsPunctuation("["))
                 {
-                    Advance();
+                    Advance(); // пропускаем "["
 
                     ASTNode index;
                     if (Check(Token.TokenType.Var))
@@ -184,13 +156,13 @@ namespace SproutInterpreter
                         index = ParseExpression();
                     }
 
-                    if (currentToken == null || currentToken.Type != Token.TokenType.Backtick)
-                        throw new Exception($"Ожидался `, получено {currentToken}");
+                    if (currentToken == null || !IsPunctuation("]"))
+                        throw new Exception($"Ожидался ], получено {currentToken}");
 
-                    Advance();
+                    Advance(); // пропускаем "]"
                     node = new BinaryOpNode("index", node, index);
                 }
-                return node;  // Теперь возвращаем ASTNode, а не CallNode
+                return node;
             }
 
             return call;
