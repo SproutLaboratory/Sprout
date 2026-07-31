@@ -45,7 +45,7 @@ for i to 10, 2 {
 ```sprout
 arr = [10, 20, 30, 40, 50]
 for i to len(arr) - 1 {
-    out str arr`i`
+    out str arr[i]
 }
 # Output: 10, 20, 30, 40, 50
 ```
@@ -55,7 +55,7 @@ for i to len(arr) - 1 {
 ```sprout
 arr = [10, 20, 30, 40, 50]
 for i to len(arr) {
-    out str arr`i`
+    out str arr[i]
 }
 # Output: 10, 20, 30, 40, 50
 ```
@@ -92,7 +92,7 @@ while x < 5 {
 arr = [1, 2, 3, 4, 5]
 i = 0
 while i < len(arr) {
-    out str arr`i`
+    out str arr[i]
     i = i + 1
     global(i)
 }
@@ -128,7 +128,7 @@ repeat 5 times i {
 ```sprout
 arr = [10, 20, 30]
 repeat 3 times i {
-    out str arr`i`
+    out str arr[i]
 }
 # Output: 10, 20, 30
 ```
@@ -189,7 +189,7 @@ for i to 10 {
 arr = [1, 2, 3, 4, 5]
 sum = 0
 for i to len(arr) - 1 {
-    sum = sum + arr`i`
+    sum = sum + arr[i]
 }
 out "Sum: " + str sum
 # Output: Sum: 15
