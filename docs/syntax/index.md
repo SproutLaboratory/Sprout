@@ -46,7 +46,7 @@ out greet(name)
 arr = [1, 2, 3, 4, 5]
 sum = 0
 for i to len(arr) {
-    sum = sum + arr`i`
+    sum = sum + arr[i]
     global(sum)
 }
 out "Sum: " + str sum
