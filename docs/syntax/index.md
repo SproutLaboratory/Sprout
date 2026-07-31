@@ -1,4 +1,4 @@
-[next >](comments.md)
+[< back](../SUMMARY.md) | [next >](comments.md)
 
 # 📘 Sprout Syntax
 
