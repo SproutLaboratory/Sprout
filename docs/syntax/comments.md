@@ -45,7 +45,8 @@ Loop through each element
 and add it to sum
 ###
 for i to len(arr) {
-    sum = sum + arr`i`
+    sum = sum + arr[i]
+    global(sum)
 }
 
 out "Sum: " + str sum  # Print the result
