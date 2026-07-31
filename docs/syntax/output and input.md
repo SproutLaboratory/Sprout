@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 [< back](operators.md) | [next >](if%20elif%20and%20else.md)
 
 ---
