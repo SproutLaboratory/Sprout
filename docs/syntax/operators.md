@@ -12,25 +12,27 @@ Sprout supports arithmetic, comparison, logical, and special operators.
 
 | Operator | Description | Example |
 |----------|-------------|---------|
-| `+` | Addition | `5 + 3` → `8` |
-| `-` | Subtraction | `10 - 4` → `6` |
-| `*` | Multiplication | `6 * 7` → `42` |
-| `/` | Division | `15 / 3` → `5` |
-| `%` | Modulo (remainder) | `10 % 3` → `1` |
-| `**` | Exponentiation | `2 ** 10` → `1024` |
+| `+` | Addition | `(5 + 3)` → `8` |
+| `-` | Subtraction | `(10 - 4)` → `6` |
+| `*` | Multiplication | `(6 * 7)` → `42` |
+| `/` | Division | `(15 / 3)` → `5` |
+| `%` | Modulo (remainder) | `(10 % 3)` → `1` |
+| `**` | Exponentiation | `(2 ** 10)` → `1024` |
 
 ### Examples
 ```sprout
-x = 5 + 3
-y = 10 - 4
-z = 6 * 7
-div = 15 / 3
-mod = 10 % 3
-pow = 2 ** 10
+x = (5 + 3)
+y = (10 - 4)
+z = (6 * 7)
+div = (15 / 3)
+mod = (10 % 3)
+pow = (2 ** 10)
 
 out str x   # 8
 out str pow # 1024
 ```
+
+**Important:** All arithmetic operations must be wrapped in parentheses `()`.
 
 ---
 
@@ -38,13 +40,13 @@ out str pow # 1024
 
 | Operator | Description | Example |
 |----------|-------------|---------|
-| `==` | Equal (with conversion) | `5 == 5` → `true` |
-| `!=` | Not equal | `5 != 3` → `true` |
-| `>` | Greater than | `10 > 5` → `true` |
-| `<` | Less than | `5 < 10` → `true` |
-| `>=` | Greater than or equal | `10 >= 10` → `true` |
-| `<=` | Less than or equal | `5 <= 10` → `true` |
-| `?=` | Strict equal | `5 ?= 5` → `true`, `"5" ?= 5` → `false` |
+| `==` | Equal (with conversion) | `(5 == 5)` → `true` |
+| `!=` | Not equal | `(5 != 3)` → `true` |
+| `>` | Greater than | `(10 > 5)` → `true` |
+| `<` | Less than | `(5 < 10)` → `true` |
+| `>=` | Greater than or equal | `(10 >= 10)` → `true` |
+| `<=` | Less than or equal | `(5 <= 10)` → `true` |
+| `?=` | Strict equal | `(5 ?= 5)` → `true`, `("5" ?= 5)` → `false` |
 
 ### Examples
 ```sprout
@@ -63,9 +65,9 @@ out str (x >= 10)  # true
 
 | Operator | Description | Example |
 |----------|-------------|---------|
-| `and` | Logical AND | `true and false` → `false` |
-| `or` | Logical OR | `true or false` → `true` |
-| `not` | Logical NOT | `not true` → `false` |
+| `and` | Logical AND | `(true and false)` → `false` |
+| `or` | Logical OR | `(true or false)` → `true` |
+| `not` | Logical NOT | `(not true)` → `false` |
 
 ### Examples
 ```sprout
@@ -89,30 +91,30 @@ y = -x  # -5
 out str y
 ```
 
-### Index (`````)
+### Index (`[]`)
 Access elements in arrays, dictionaries, and strings:
 ```sprout
 arr = [10, 20, 30]
-out str arr`0`   # 10
+out str arr[0]   # 10
 
 dict = {name = "Alex"}
-out dict`name`   # "Alex"
+out dict["name"]   # "Alex"
 
 text = "Hello"
-out text`0`      # "H"
+out text[0]      # "H"
 ```
 
 ### String Multiplication (`*`)
 Repeat a string:
 ```sprout
-s = "abc" * 3   # "abcabcabc"
+s = ("abc" * 3)   # "abcabcabc"
 out s
 ```
 
 ### String Concatenation (`+`)
 Join strings:
 ```sprout
-out "Hello" + " " + "World"  # "Hello World"
+out ("Hello" + " " + "World")  # "Hello World"
 ```
 
 ---
@@ -133,8 +135,8 @@ From highest to lowest:
 
 ### Example
 ```sprout
-result = 2 + 3 * 4 ** 2
-# 2 + 3 * 16
+result = (2 + (3 * (4 ** 2)))
+# 2 + (3 * 16)
 # 2 + 48
 # 50
 ```
@@ -146,14 +148,14 @@ result = 2 + 3 * 4 ** 2
 Sprout automatically converts types when needed:
 
 ```sprout
-out "Number: " + str 42    # "Number: 42"
-out "Pi: " + str 3.14      # "Pi: 3.14"
+out ("Number: " + str 42)    # "Number: 42"
+out ("Pi: " + str 3.14)      # "Pi: 3.14"
 ```
 
 ### Important: Using `str` with expressions
 ```sprout
-out "Sum: " + str (5 + 3)   # ✅ "Sum: 8"
-out "Sum: " + str 5 + 3     # ❌ "Sum: 5" + 3 → error
+out ("Sum: " + str (5 + 3))   # ✅ "Sum: 8"
+out ("Sum: " + str 5 + 3)     # ❌ "Sum: 5" + 3 → error
 ```
 
 ---
