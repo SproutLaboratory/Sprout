@@ -1,4 +1,4 @@
-[< back](publishing.md)
+[< back](index.md)
 
 ---
 
