@@ -73,7 +73,6 @@ MyLibrary/
 ## 📝 Documentation
 
 ### Include a README
-```markdown
 # MyLibrary
 
 ## Installation
@@ -96,7 +95,6 @@ Returns the sum of two numbers.
 
 ## License
 MIT
-```
 
 ---
 
