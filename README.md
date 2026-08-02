@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-3.0.0-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/badge/version-1.1.0-brightgreen?style=for-the-badge">
   <img src="https://img.shields.io/badge/platform-Windows-blue?style=for-the-badge">
   <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge">
   <img src="https://img.shields.io/badge/.NET-10.0-512BD4?style=for-the-badge&logo=dotnet">
